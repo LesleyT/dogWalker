@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8" />
+        <title>My First Application</title>
+		<link rel="stylesheet" type="text/css" href="css/dx.common.css" />
+		<link rel="stylesheet" type="text/css" href="css/dx.ios.default.css" />
+		<link rel="stylesheet" type="text/css" href="css/dx.android.holo-dark.css" />
+		<link rel="stylesheet" type="text/css" href="css/dx.desktop.default.css" />
+		<link rel="stylesheet" type="text/css" href="css/dx.win8.black.small.css" />
+    <link rel="stylesheet" type="text/css" href="css/override.css" />
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="js/knockout-2.2.1.js"></script>
+        <script type="text/javascript" src="js/globalize.min.js"></script>
+        <script type="text/javascript" src="js/dx.phonejs.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        <script type="text/javascript" src="js/home31.js"></script>
+	</head>
+   <body>
+    <script>
+
+ // Load the SDK asynchronously
+  (function(d){
+   var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+   if (d.getElementById(id)) {return;}
+   js = d.createElement('script'); js.id = id; js.async = true;
+   js.src = "//connect.facebook.net/en_US/all.js";
+   ref.parentNode.insertBefore(js, ref);
+  }(document));
+
+  // Here we run a very simple test of the Graph API after login is successful. 
+  // This testAPI() function is only called in those cases. 
+  function testAPI() {
+    FB.Event.subscribe('auth.authResponseChange', function(response) {
+  // Additional init code here
+  console.log(response);
+  FB.getLoginStatus(function(response) {
+    console.log(response);
+  if (response.status === 'connected') {
+
+        console.log('Welcome!  Fetching your information.... ');
+      FB.api('/me', function(response) {
+      console.log('Good to see you, ' + response.name + '.');
+    });
+
+  } else if (response.status === 'not_authorized') {
+      // not_authorized
+      FB.login();
+  } else {
+      // not_logged_in
+      FB.login();
+  }
+  });
+});
+   
+  }
+    </script>
+  <div id="fb-root"></div>
+  <div data-options="dxLayout : { name: 'default' } " >
+    <div data-bind="dxToolbar: { items: [ { text: '', align: 'center' } ] }" ></div>      
+    <div data-options="dxContentPlaceholder : { name: 'content', transition: 'slide' } " ></div>
+</div>
+<div id="viewHome" data-options="dxView: {name: 'home'}">
+    <div data-options="dxContent : { targetPlaceholder: 'content' } " >
+      <header>
+        <img class="currentDog" src='images/dog.jpg' data-dog-id="1"/>
+        <nav>
+          <ul>
+            <li data-group-id="1" data-bind="dxButton: {clickAction: gatherDogWalk}" id="walked">walked<span></span></li>
+            <li data-group-id="1" data-bind="dxButton: {clickAction: testAPI}" id="action">action<span></span></li>
+            <li data-group-id="1" data-bind="dxButton: {clickAction: showNotification}" id="talk">talk<span></span></li>
+          </ul>
+        </nav>
+      </header>
+        <h1 class="head">Last Check walk</h1>
+        <div id="map_canvas">
+          <div id="clock"></div>
+        </div>
+    </div>
+</div> 
+
+
+
+<div data-options="dxView : { name: 'greeting'} " >
+  <div data-options="dxContent : { targetPlaceholder: 'content' } " >
+      <div data-bind="dxButton: { text: 'Go back', clickAction: '#_back' }"></div>
+  </div>
+</div>
+    </body>
+</html>
