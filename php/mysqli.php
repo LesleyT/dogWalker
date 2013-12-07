@@ -1,7 +1,7 @@
 <?php
   //connects to the database and returns the resource for later use
   function connect(){
-      $connect = new mysqli("lesleytaihitu.nl.mysql", "lesleytaihitu_n", "tilburg12", "lesleytaihitu_n");
+      $connect = new mysqli("**", "**", "**", "**");
       if(!$connect){
         return "connection could not be astablished" . mysqli_connect_error();
       }
